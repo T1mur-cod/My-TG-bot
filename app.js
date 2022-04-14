@@ -1,8 +1,10 @@
+require('dotenv').config();
+
 const TelegApi = require('node-telegram-bot-api');
-const fetch = require('node-fetch');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const { gameOptions, againOptions } = require('./options');
 
-const token = '5318716480:AAH8Rda03oNpU6H4wJmy4vZnH4KvYbLmjJI';
+const token = process.env.DB_TOKEN;
 
 const bot = new TelegApi(token, { polling: true });
 
@@ -54,8 +56,6 @@ const start = () => {
       return bot.sendMessage(chatId, `Поздравляю! Ты отгадал(а)! Я действительно загадал: ${chats[chatId]}`, againOptions);
     }
     return bot.sendMessage(chatId, `Ты не отгадал(а)! ХА-ХА! Моё число: ${chats[chatId]}`, againOptions);
-
-    console.log(msg);
   });
 
   const options = {
