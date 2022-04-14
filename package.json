@@ -13,7 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
+    "fetch": "^1.1.0",
     "morgan": "^1.10.0",
+    "node-fetch": "^3.2.3",
     "node-telegram-bot-api": "^0.56.0",
     "nodemon": "^2.0.15",
     "pg": "^8.7.3",

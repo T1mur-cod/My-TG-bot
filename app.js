@@ -1,4 +1,5 @@
 const TelegApi = require('node-telegram-bot-api');
+const fetch = require('node-fetch');
 const { gameOptions, againOptions } = require('./options');
 
 const token = '5318716480:AAH8Rda03oNpU6H4wJmy4vZnH4KvYbLmjJI';
@@ -56,6 +57,19 @@ const start = () => {
 
     console.log(msg);
   });
+
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Host': 'chess-puzzles.p.rapidapi.com',
+      'X-RapidAPI-Key': '8ed2e4bef7msh0ef1e4fb20f433cp1386b1jsn4f55d0f27aa4',
+    },
+  };
+
+  fetch('https://chess-puzzles.p.rapidapi.com/?themes=%5B%22middlegame%22%2C%22advantage%22%5D&rating=1500&themesType=ALL&playerMoves=4&count=25', options)
+    .then((response) => response.json())
+    .then((response) => console.log(response))
+    .catch((err) => console.error(err));
 };
 
 start();
