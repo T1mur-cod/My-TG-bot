@@ -1,13 +1,11 @@
 const TelegApi = require('node-telegram-bot-api');
-const { gameOptions, againOptions } = require('./options')
+const { gameOptions, againOptions } = require('./options');
 
 const token = '5318716480:AAH8Rda03oNpU6H4wJmy4vZnH4KvYbLmjJI';
 
 const bot = new TelegApi(token, { polling: true });
 
 const chats = {};
-
-
 
 const startGame = async (chatId) => {
   await bot.sendMessage(chatId, 'Я загадываю цифру от 0 до 9, а ты должен угадать');
@@ -38,7 +36,7 @@ const start = () => {
       return bot.sendMessage(chatId, `Вас зовут ${msg.chat.first_name}, ${words[randomWords]}`);
     }
     if (text === '/game') {
-     return startGame(chatId)
+      return startGame(chatId);
     }
 
     return bot.sendMessage(chatId, `https://tlgrm.ru/_/stickers/80a/5c9/80a5c9f6-a40e-47c6-acc1-44f43acc0862/2.jpg\ 
@@ -49,13 +47,13 @@ const start = () => {
     const { data } = msg;
     const chatId = msg.message.chat.id;
     if (data === '/again') {
-      return startGame(chatId)
+      return startGame(chatId);
     }
-    if (data === chats[chatId]) {
-      return bot.sendMessage(chatId, `Поздравляю! Ты отгадал(а)! Твоё число: ${chats[chatId]}`, againOptions);
-    } else {
-      return bot.sendMessage(chatId, `Ты не отгадал(а)! ХА-ХА! Моё число: ${chats[chatId]}`, againOptions);
+    if (data == chats[chatId]) {
+      return bot.sendMessage(chatId, `Поздравляю! Ты отгадал(а)! Я действительно загадал: ${chats[chatId]}`, againOptions);
     }
+    return bot.sendMessage(chatId, `Ты не отгадал(а)! ХА-ХА! Моё число: ${chats[chatId]}`, againOptions);
+
     console.log(msg);
   });
 };
