@@ -37,14 +37,19 @@ async function freeGame(chatId) {
     const randGame = randomInteger(0, result.length);
     const newFreeGame = result[randGame];
     console.log('====>', newFreeGame);
-    const freegame = newFreeGame
-    const view = `
-    Title: ${freegame.title}
-    ${freegame.thumbnail}
-     ${freegame.short_description} 
-     ${freegame.game_url} ${freegame.short_genre} ${freegame.platform} ${freegame.platform} ${freegame.publisher} 
-    Release:${freegame.release_date} ${freegame.freetogame_profile_url}`;
-    bot.sendMessage(chatId, JSON.stringify(view));
+    // const freegame = newFreeGame
+
+    const md = `
+    Title: ${newFreeGame.title}
+    ${newFreeGame.thumbnail}
+    ${newFreeGame.short_description} 
+    ${newFreeGame.game_url} 
+    ${newFreeGame.platform} 
+    ${newFreeGame.publisher} 
+    Release:${newFreeGame.release_date} 
+    ${newFreeGame.freetogame_profile_url}
+    `;
+    bot.sendMessage(chatId, md);
   } else {
     console.log(err);
   }
