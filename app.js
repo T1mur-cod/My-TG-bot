@@ -1,7 +1,7 @@
 require('dotenv').config();
-
 const TelegApi = require('node-telegram-bot-api');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const fetch = require('node-fetch');
+
 const { gameOptions, againOptions } = require('./options');
 
 const token = process.env.DB_TOKEN;
@@ -17,11 +17,30 @@ const startGame = async (chatId) => {
   await bot.sendMessage(chatId, 'Отгадывай!', gameOptions);
 };
 
+const options = {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
+    'X-RapidAPI-Key': '8ed2e4bef7msh0ef1e4fb20f433cp1386b1jsn4f55d0f27aa4',
+  },
+};
+
+async function freeGame(options) {
+  const game = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/game?id=452', options);
+  if (game.ok) {
+    const result = await game.json();
+    console.log(result);
+  } else {
+    console.log(err);
+  }
+}
+
 const start = () => {
   bot.setMyCommands([
     { command: '/start', description: 'Начальное приветсвие' },
     { command: '/info', description: 'Информация о Вас' },
     { command: '/game', description: 'Давай сыграем' },
+    { command: '/free_game', description: 'Посмотри:' },
   ]);
 
   bot.on('message', async (msg) => {
@@ -29,7 +48,7 @@ const start = () => {
     const { text } = msg;
     const chatId = msg.chat.id;
 
-    const words = ['красивое имя', 'отвратительное имя', 'обычное имя', 'могли бы назвать получше', 'имя кайф', 'я так свое хомяка назову'];
+    const words = ['красивое имя', 'отвратительное имя', 'обычное имя', 'могли бы назвать получше', 'имя кайф', 'я так своего хомяка назову'];
     const randomWords = Math.floor(Math.random() * words.length);
 
     if (text === '/start') {
@@ -41,9 +60,24 @@ const start = () => {
     if (text === '/game') {
       return startGame(chatId);
     }
+    if (text === '/free_ame') {
+      return freeGame(chatId);
+    }
 
     return bot.sendMessage(chatId, `https://tlgrm.ru/_/stickers/80a/5c9/80a5c9f6-a40e-47c6-acc1-44f43acc0862/2.jpg\ 
                                      \n Я знаю только специальные команды...`);
+  });
+
+  bot.on('callback_query', (msg) => {
+    const { data } = msg;
+    const chatId = msg.message.chat.id;
+
+    if (options === '/free_game') {
+      return freeGame(chatId);
+    }
+    if (data === options[chatId]) {
+      return bot.sendMessage(chatId, `${options[chatId]}`);
+    }
   });
 
   bot.on('callback_query', (msg) => {
@@ -57,19 +91,6 @@ const start = () => {
     }
     return bot.sendMessage(chatId, `Ты не отгадал(а)! ХА-ХА! Моё число: ${chats[chatId]}`, againOptions);
   });
-
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Host': 'chess-puzzles.p.rapidapi.com',
-      'X-RapidAPI-Key': '8ed2e4bef7msh0ef1e4fb20f433cp1386b1jsn4f55d0f27aa4',
-    },
-  };
-
-  fetch('https://chess-puzzles.p.rapidapi.com/?themes=%5B%22middlegame%22%2C%22advantage%22%5D&rating=1500&themesType=ALL&playerMoves=4&count=25', options)
-    .then((response) => response.json())
-    .then((response) => console.log(response))
-    .catch((err) => console.error(err));
 };
 
 start();
