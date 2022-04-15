@@ -25,11 +25,26 @@ const options = {
   },
 };
 
-async function freeGame(options) {
-  const game = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/game?id=452', options);
+async function freeGame(chatId) {
+  const game = await fetch('https://free-to-play-games-database.p.rapidapi.com/api/games', options);
   if (game.ok) {
     const result = await game.json();
-    console.log(result);
+    // const gameFilter = result.filter((item) => item.genre === chatId.data);
+    function randomInteger(min, max) {
+      const rand = min - 0.5 + Math.random() * (max - min + 1);
+      return Math.round(rand);
+    }
+    const randGame = randomInteger(0, result.length);
+    const newFreeGame = result[randGame];
+    console.log('====>', newFreeGame);
+    const freegame = newFreeGame
+    const view = `
+    Title: ${freegame.title}
+    ${freegame.thumbnail}
+     ${freegame.short_description} 
+     ${freegame.game_url} ${freegame.short_genre} ${freegame.platform} ${freegame.platform} ${freegame.publisher} 
+    Release:${freegame.release_date} ${freegame.freetogame_profile_url}`;
+    bot.sendMessage(chatId, JSON.stringify(view));
   } else {
     console.log(err);
   }
@@ -60,7 +75,7 @@ const start = () => {
     if (text === '/game') {
       return startGame(chatId);
     }
-    if (text === '/free_ame') {
+    if (text === '/free_game') {
       return freeGame(chatId);
     }
 
