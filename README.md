@@ -1,6 +1,6 @@
 # My-TG-bot
 
-<div aling="center">
+<div align="center">
   <img src="https://media.giphy.com/media/Lny6Rw04nsOOc/giphy.gif" alt="header"/>
 </div>
 
