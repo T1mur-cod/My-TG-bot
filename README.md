@@ -1,7 +1,7 @@
 # My-TG-bot
 
-<div>
- <iframe src="https://giphy.com/embed/Lny6Rw04nsOOc" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/code-404-javascript-Lny6Rw04nsOOc">via GIPHY</a></p>
+<div aling="center">
+  <img src="https://media.giphy.com/media/Lny6Rw04nsOOc/giphy.gif" alt="header"/>
 </div>
 
 <h2 aling="center"> Demo https://t.me/TGTMbot </h2>
