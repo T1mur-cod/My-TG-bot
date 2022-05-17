@@ -6,6 +6,8 @@
    </h6>
  </div>
   
+  ![JavaScript](https://img.shields.io/badge/JavaScript-20232A?style=for-the-badge&logo=javascript)
   ![Heroku](https://img.shields.io/badge/Heroku-20232A?style=for-the-badge&logo=Heroku)
   <a target="_blank" href="https://t.me/TGTMbot"><img
     src="https://img.shields.io/badge/Telegram-20232A?style=for-the-badge&logo=telegram"/></a>&nbsp;&nbsp;&nbsp;
+    
